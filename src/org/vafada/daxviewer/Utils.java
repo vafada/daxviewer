@@ -26,6 +26,6 @@ public class Utils {
 
     public static int ArrayToShort(byte[] data, int offset)
     {
-        return (data[offset + 0] + (data[offset + 1] << 8));
+        return ((data[offset + 0] + (data[offset + 1] << 8))) & 0xFF;
     }
 }

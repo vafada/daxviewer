@@ -57,10 +57,7 @@ public class EgaBlock {
                         var pxX = (x + xPosPx);
                         var pxY = (y + yPosPx);
                         {
-                            System.out.println("x = " + x + ", b = " + b + ", b >> 4 = " + (b >> 4));
                             int unsignedByte = b & 0xFF;
-                            System.out.println("unsignedByte = " + unsignedByte);
-                            System.out.println("b = " + b);
                             Color color = new Color(EgaColors[unsignedByte >> 4], true); // 'true' means use alpha
                             bitmap.setRGB(pxX, pxY, color.getRGB());
                         }
