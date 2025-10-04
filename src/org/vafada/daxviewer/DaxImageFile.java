@@ -13,9 +13,13 @@ public class DaxImageFile extends DaxFile {
 
     protected void processBlocks() {
         for (DaxFileBlock block : blocks) {
-            var renderBlock = new RenderBlockFactory().createBlock(block);
-            System.out.println("Renderer = " + renderBlock);
-            bitmaps.addAll(renderBlock.getBitmaps());
+            try {
+                var renderBlock = new RenderBlockFactory().createBlock(block);
+                System.out.println("Renderer = " + renderBlock);
+                bitmaps.addAll(renderBlock.getBitmaps());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
