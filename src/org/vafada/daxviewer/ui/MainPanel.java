@@ -35,14 +35,15 @@ public class MainPanel extends JPanel {
     public MainPanel() {
         setLayout(new BorderLayout());
 
-        Iterable<Path> rootDirectories = FileSystems.getDefault().getRootDirectories();
+        String osName = System.getProperty("os.name");
 
-        DefaultMutableTreeNode virtualRoot = new DefaultMutableTreeNode("Virtual Root");
 
-        for (Path rootDirectory : rootDirectories) {
-            DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(rootDirectory.toFile());
+        if (osName != null && osName.toLowerCase().contains("linux")) {
+            String userHome = System.getProperty("user.home");
+            File homeDir = new File(userHome);
+            DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(homeDir);
             {
-                File[] firstLevelDirs = rootDirectory.toFile().listFiles(File::isDirectory);
+                File[] firstLevelDirs = homeDir.listFiles(File::isDirectory);
                 if (firstLevelDirs != null) {
                     Arrays.sort(firstLevelDirs);
                     for (File dir : firstLevelDirs) {
@@ -54,7 +55,7 @@ public class MainPanel extends JPanel {
                 }
             }
             {
-                File[] files = rootDirectory.toFile().listFiles(File::isFile);
+                File[] files = homeDir.listFiles(File::isFile);
                 if (files != null) {
                     Arrays.sort(files);
                     for (File file : files) {
@@ -66,12 +67,47 @@ public class MainPanel extends JPanel {
                     }
                 }
             }
-            virtualRoot.add(rootNode);
+            tree = new JTree(rootNode);
+            tree.setRootVisible(true);
+        } else {
+            Iterable<Path> rootDirectories = FileSystems.getDefault().getRootDirectories();
+            DefaultMutableTreeNode virtualRoot = new DefaultMutableTreeNode("Virtual Root");
+
+            for (Path rootDirectory : rootDirectories) {
+                DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(rootDirectory.toFile());
+                {
+                    File[] firstLevelDirs = rootDirectory.toFile().listFiles(File::isDirectory);
+                    if (firstLevelDirs != null) {
+                        Arrays.sort(firstLevelDirs);
+                        for (File dir : firstLevelDirs) {
+                            if (dir.isHidden()) continue;
+                            DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(dir);
+                            addDummyChild(childNode); // Make child expandable
+                            rootNode.add(childNode);
+                        }
+                    }
+                }
+                {
+                    File[] files = rootDirectory.toFile().listFiles(File::isFile);
+                    if (files != null) {
+                        Arrays.sort(files);
+                        for (File file : files) {
+                            if (file.isHidden()) continue;
+                            // show only DAX file
+                            if (!isDAXFile(file)) continue;
+                            DefaultMutableTreeNode child = new DefaultMutableTreeNode(file);
+                            rootNode.add(child);
+                        }
+                    }
+                }
+                virtualRoot.add(rootNode);
+            }
+
+            tree = new JTree(virtualRoot);
+            tree.setRootVisible(false);
+            tree.expandRow(1);
         }
 
-
-        tree = new JTree(virtualRoot);
-        tree.expandRow(1);
 
         // Custom renderer: only show file/folder name
         tree.setCellRenderer(new DefaultTreeCellRenderer() {
@@ -144,10 +180,6 @@ public class MainPanel extends JPanel {
                 picturesContainer.setBitmaps(daxImageFile.getBitmaps());
             }
         });
-
-        tree.setRootVisible(false);
-
-
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 new JScrollPane(tree),
