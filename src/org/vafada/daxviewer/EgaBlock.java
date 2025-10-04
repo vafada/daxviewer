@@ -47,7 +47,7 @@ public class EgaBlock extends RenderBlock {
             var offset = 0;
             for (var i = 0; i < itemCount; i++, offset += egaDataSize) {
                 var bitmap = new BufferedImage((widthPx + xPosPx), (heightPx + yPosPx),
-                        BufferedImage.TYPE_USHORT_555_RGB);
+                        BufferedImage.TYPE_INT_ARGB);
                 for (var y = 0; y < heightPx; y++) {
                     for (var x = 0; x < widthPx; x += 2) {
                         var b = data[egaDataOffset + (y * width * 4) + (x / 2) + offset];

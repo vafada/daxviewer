@@ -17,7 +17,7 @@ public class EgaSpriteBlock extends RenderBlock {
 
         Color[] colors = new Color[16];
         for (int i = 0; i < 16; i++) {
-            colors[i] = new Color(EgaVgaPalette.EgaColors[i], true); // 'true' means use alpha
+            colors[i] = new Color(EgaVgaPalette.EgaColors[i], false); // 'true' means use alpha
         }
 
         var filename = block.getFilename();
@@ -26,7 +26,7 @@ public class EgaSpriteBlock extends RenderBlock {
 
         if (filename.startsWith("SPRI")) {
             colors[0] = new Color(0, 0, 0, 0);
-            colors[13] = new Color(EgaVgaPalette.EgaColors[0], true);
+            colors[13] = new Color(EgaVgaPalette.EgaColors[0], false);
         }
 
 
@@ -72,7 +72,7 @@ public class EgaSpriteBlock extends RenderBlock {
                 }
             }
 
-            var bitmap = new BufferedImage((width_px + x_pos_px), (height_px + y_pos_px), BufferedImage.TYPE_USHORT_555_RGB);
+            var bitmap = new BufferedImage((width_px + x_pos_px), (height_px + y_pos_px), BufferedImage.TYPE_INT_ARGB);
             for (int y = 0; y < height_px; y++) {
                 for (int x = 0; x < width_px; x += 2) {
                     byte b = data[(y * width * 4) + (x / 2) + offset];
