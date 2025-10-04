@@ -1,5 +1,9 @@
 package org.vafada.daxviewer;
 
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -26,5 +30,19 @@ public class Utils {
     public static int ArrayToShort(byte[] data, int offset)
     {
         return ((data[offset + 0] + (data[offset + 1] << 8))) & 0xFF;
+    }
+
+    public static void exportAsPNG(BufferedImage image) {
+        String fileName = "daxviewer-" +  System.currentTimeMillis() + ".png";
+        //String currentFolder = System.getProperty("user.dir");
+        //System.out.println("Current folder: " + currentFolder);
+        File newPNG = new File(fileName);
+        try {
+            ImageIO.write(image, "png", newPNG);
+            String message = "Image exported at " + newPNG.getAbsolutePath();
+            JOptionPane.showMessageDialog(null, message, "Export Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

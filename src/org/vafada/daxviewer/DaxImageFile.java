@@ -13,11 +13,7 @@ public class DaxImageFile extends DaxFile {
 
     protected void processBlocks() {
         for (DaxFileBlock block : blocks) {
-            //EgaBlock egaBlock = new EgaBlock(block);
             var renderBlock = new RenderBlockFactory().createBlock(block);
-
-            System.out.println("renderBlock = " + renderBlock);
-
             bitmaps.addAll(renderBlock.getBitmaps());
         }
     }

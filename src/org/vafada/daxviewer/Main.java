@@ -1,50 +1,64 @@
 package org.vafada.daxviewer;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class Main extends JPanel {
     private static final int PADDING = 20;
 
-    private List<BufferedImage> images;
-
     public Main(List<BufferedImage> bitmaps) {
-        this.images = bitmaps;
+        this.setLayout(new FlowLayout(FlowLayout.LEFT, PADDING, PADDING));
+
+        for (BufferedImage bitmap : bitmaps) {
+            PicturePanel panel = new PicturePanel(bitmap);
+            this.add(panel);
+        }
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    static class PicturePanel extends JPanel {
+        BufferedImage bitmap;
 
-        int panelWidth = getWidth();
+        public PicturePanel(BufferedImage bitmap) {
+            this.bitmap = bitmap;
+            this.setPreferredSize(new Dimension(bitmap.getWidth(), bitmap.getHeight()));
 
-        int y = 0;
-        int x = 0;
+            JPanel that = this;
 
-        int index = 0;
-        int tallestImageHeight = 0;
-        for (BufferedImage image : images) {
-            if (image.getHeight() > tallestImageHeight) {
-                tallestImageHeight = image.getHeight();
-            }
-            int imageWidth = image.getWidth();
-            int imageHeight = image.getHeight();
+            JPopupMenu tooltipPopup = new JPopupMenu();
+            JMenuItem menuItem = new JMenuItem("Export as PNG");
+            menuItem.addActionListener(e -> {
+                Utils.exportAsPNG(bitmap);
+            });
 
-            int nextX = x + imageWidth + PADDING;
-            // move to the next row if the next image would exceed the panel width
-            if (nextX > panelWidth && index > 0) {
-                x = 0;
-                y += tallestImageHeight + PADDING;
-                nextX = x + imageWidth + PADDING;
-                tallestImageHeight = imageHeight;
-            }
-            // Draw the BufferedImage onto the panel
-            g.drawImage(image, x, y, this);
-            x = nextX;
-            index++;
+            tooltipPopup.add(menuItem);
+
+            this.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    // Check if right mouse button was pressed
+                    if (SwingUtilities.isRightMouseButton(e)) {
+                        tooltipPopup.show(that, e.getX(), e.getY());
+                    }
+                }
+            });
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(bitmap, 0, 0, null);
         }
     }
 
