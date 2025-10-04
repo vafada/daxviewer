@@ -53,9 +53,6 @@ public abstract class DaxFile {
                     blocks.add(new DaxFileBlock(fileName, dhe.id(), raw));
                 }
             }
-
-            System.out.println("dataCount = " + dataCount);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
