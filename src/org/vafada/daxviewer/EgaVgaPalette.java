@@ -21,9 +21,5 @@ public class EgaVgaPalette {
     public static final int EGABrightYellowColor = 0XFFFFFF55;
     public static final int EGABrightWhiteColor = 0XFFFFFFFF;
 
-    public static final int[] EgaColors = {EGABlackColor, EGABlueColor, EGAGreenColor, EGACyanColor, EGARedColor,
-            EGAMagentaColor, EGABrownColor, EGALightGrayColor, EGADarkGrayColor,
-            EGABrightBlueColor, EGABrightGreenColor, EGABrightCyanColor,
-            EGABrightRedColor, EGABrightMagentaColor, EGABrightYellowColor,
-            EGABrightWhiteColor};
+    public static final int[] EgaColors = {EGABlackColor, EGABlueColor, EGAGreenColor, EGACyanColor, EGARedColor, EGAMagentaColor, EGABrownColor, EGALightGrayColor, EGADarkGrayColor, EGABrightBlueColor, EGABrightGreenColor, EGABrightCyanColor, EGABrightRedColor, EGABrightMagentaColor, EGABrightYellowColor, EGABrightWhiteColor};
 }

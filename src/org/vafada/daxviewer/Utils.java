@@ -1,6 +1,5 @@
 package org.vafada.daxviewer;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -21,7 +20,7 @@ public class Utils {
 
     public static int ArrayToInt(byte[] data, int offset)
     {
-        return (int)(data[offset + 0] + (data[offset + 1] << 8) + (data[offset + 2] << 16) + (data[offset + 3] << 24));
+        return (data[offset + 0] + (data[offset + 1] << 8) + (data[offset + 2] << 16) + (data[offset + 3] << 24));
     }
 
     public static int ArrayToShort(byte[] data, int offset)

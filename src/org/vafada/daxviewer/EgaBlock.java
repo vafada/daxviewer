@@ -2,12 +2,9 @@ package org.vafada.daxviewer;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
-public class EgaBlock {
+public class EgaBlock extends RenderBlock {
     private int[] EgaColors;
-    private List<BufferedImage> bitmaps = new ArrayList<>();
 
     public EgaBlock(DaxFileBlock block) {
         // setBlockId(block.Id);
@@ -73,9 +70,5 @@ public class EgaBlock {
                 bitmaps.add(bitmap);
             }
         }
-    }
-
-    public List<BufferedImage> getBitmaps() {
-        return bitmaps;
     }
 }

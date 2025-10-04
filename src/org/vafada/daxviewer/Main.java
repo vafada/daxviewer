@@ -6,11 +6,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class BitmapFromArray extends JPanel {
+public class Main extends JPanel {
 
     private List<BufferedImage> images;
 
-    public BitmapFromArray(List<BufferedImage> bitmaps) {
+    public Main(List<BufferedImage> bitmaps) {
         this.images = bitmaps;
         /*
         // Define the dimensions of the bitmap
@@ -63,8 +63,8 @@ public class BitmapFromArray extends JPanel {
         System.out.println(args[0]);
         DaxImageFile daxImageFile = new DaxImageFile(args[0], true);
 
-        JFrame frame = new JFrame("Bitmap from Array");
-        BitmapFromArray panel = new BitmapFromArray(daxImageFile.getBitmaps());
+        JFrame frame = new JFrame("DAX Viewer");
+        Main panel = new Main(daxImageFile.getBitmaps());
         frame.add(panel);
         frame.setSize(800, 800); // Adjust frame size to fit the image
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -3,10 +3,8 @@ package org.vafada.daxviewer;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DaxImageFile extends DaxFile {
-    //private List<Map.Entry<Integer, List<BufferedImage>>> bitmaps = new ArrayList<>();
     private List<BufferedImage> bitmaps = new ArrayList<>();
     public DaxImageFile(String path, boolean autoLoad) {
         super(path, autoLoad);
@@ -15,12 +13,12 @@ public class DaxImageFile extends DaxFile {
 
     protected void processBlocks() {
         for (DaxFileBlock block : blocks) {
-            EgaBlock egaBlock = new EgaBlock(block);
-            //var renderBlock = new RenderBlockFactory().CreateUsing(block);
+            //EgaBlock egaBlock = new EgaBlock(block);
+            var renderBlock = new RenderBlockFactory().createBlock(block);
 
-            //bitmaps.add(new Node<Integer, List<BufferedImage>>(block.id(), egaBlock.getBitmaps());
+            System.out.println("renderBlock = " + renderBlock);
 
-            bitmaps.addAll(egaBlock.getBitmaps());
+            bitmaps.addAll(renderBlock.getBitmaps());
         }
     }
 
