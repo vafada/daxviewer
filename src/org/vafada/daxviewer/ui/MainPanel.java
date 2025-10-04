@@ -37,8 +37,8 @@ public class MainPanel extends JPanel {
 
         String osName = System.getProperty("os.name");
 
-
-        if (osName != null && osName.toLowerCase().contains("linux")) {
+        String osLowercase = osName.toLowerCase();
+        if (osLowercase.contains("linux") || osLowercase.contains("mac")) {
             String userHome = System.getProperty("user.home");
             File homeDir = new File(userHome);
             DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(homeDir);
