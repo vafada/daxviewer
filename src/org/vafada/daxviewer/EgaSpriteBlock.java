@@ -17,7 +17,7 @@ public class EgaSpriteBlock extends RenderBlock {
 
         Color[] colors = new Color[16];
         for (int i = 0; i < 16; i++) {
-            colors[i] = new Color(EgaVgaPalette.EgaColors[i], false); // 'true' means use alpha
+            colors[i] = new Color(EgaVgaPalette.EgaColors[i], true);
         }
 
         var filename = block.getFilename();
@@ -26,7 +26,7 @@ public class EgaSpriteBlock extends RenderBlock {
 
         if (filename.startsWith("SPRI")) {
             colors[0] = new Color(0, 0, 0, 0);
-            colors[13] = new Color(EgaVgaPalette.EgaColors[0], false);
+            colors[13] = new Color(EgaVgaPalette.EgaColors[0], true);
         }
 
 
