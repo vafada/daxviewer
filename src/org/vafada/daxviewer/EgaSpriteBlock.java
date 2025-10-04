@@ -20,7 +20,7 @@ public class EgaSpriteBlock extends RenderBlock {
             colors[i] = new Color(EgaVgaPalette.EgaColors[i], true);
         }
 
-        var filename = block.getFilename();
+        var filename = block.getFilename().toLowerCase();
         boolean xorFrames = filename.startsWith("PIC");
         xorFrames |= filename.startsWith("FINAL");
 

@@ -33,7 +33,6 @@ public abstract class DaxFile {
                 int rawSize = Utils.readInt16LE(dis);
                 int compressedSize = Utils.readInt16LE(dis);
                 DaxFileHeaderEntry dhe = new DaxFileHeaderEntry(id, offset, rawSize, compressedSize);
-                System.out.println("dhe = " + dhe);
                 headers.add(dhe);
             }
 
