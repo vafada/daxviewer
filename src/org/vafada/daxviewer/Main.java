@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class Main extends JPanel {
+    private static final int PADDING = 20;
 
     private List<BufferedImage> images;
 
@@ -50,12 +51,32 @@ public class Main extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int y = 0;
+        int panelWidth = getWidth();
 
+        int y = 0;
+        int x = 0;
+
+        int index = 0;
+        int tallestImageHeight = 0;
         for (BufferedImage image : images) {
+            if (image.getHeight() > tallestImageHeight) {
+                tallestImageHeight = image.getHeight();
+            }
+            int imageWidth = image.getWidth();
+            int imageHeight = image.getHeight();
+
+            int nextX = x + imageWidth + PADDING;
+            // move to the next row if the next image would exceed the panel width
+            if (nextX > panelWidth && index > 0) {
+                x = 0;
+                y += tallestImageHeight + PADDING;
+                nextX = x + imageWidth + PADDING;
+                tallestImageHeight = imageHeight;
+            }
             // Draw the BufferedImage onto the panel
-            g.drawImage(image, 0, y, this);
-            y += image.getHeight() + 50;
+            g.drawImage(image, x, y, this);
+            x = nextX;
+            index++;
         }
     }
 
