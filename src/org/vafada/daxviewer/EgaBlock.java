@@ -23,26 +23,23 @@ public class EgaBlock extends RenderBlock {
         final int egaDataOffset = 17;
         int egaDataSize = height * width * 4;
 
-        System.out.println("egaDataSize = " + egaDataSize);
-
 
         EgaColors = EgaVgaPalette.EgaColors;
-/*
-        var filename = block.FileNameUpperCase;
-        if (filename.Contains("CPIC") || filename.Contains("CHEAD") || filename.Contains("CBODY")
-                || filename.Contains("DUNGCOM") || filename.Contains("WILDCOM") || filename.Contains("RANDCOM")
-                || filename.Contains("COMSPR"))
+
+        var filename = block.getFilename().toUpperCase();
+        if (filename.contains("CPIC") || filename.contains("CHEAD") || filename.contains("CBODY")
+                || filename.contains("DUNGCOM") || filename.contains("WILDCOM") || filename.contains("RANDCOM")
+                || filename.contains("COMSPR"))
         {
-            isCombatPicture = true;
             EgaColors = EgaVgaPalette.EgaCombatColors;
         }
 
-        if (data.Length == (egaDataSize * (itemCount + 1)) + egaDataOffset)
+        if (data.length == (egaDataSize * (itemCount + 1)) + egaDataOffset)
         {
             // Death Knights of Krynn
             itemCount += 1;
         }
-*/
+
         if (data.length == (egaDataSize * itemCount) + egaDataOffset) {
             var offset = 0;
             for (var i = 0; i < itemCount; i++, offset += egaDataSize) {
