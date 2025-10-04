@@ -24,10 +24,10 @@ public class EgaSpriteBlock extends RenderBlock {
         boolean xorFrames = filename.startsWith("PIC");
         xorFrames |= filename.startsWith("FINAL");
 
-        /*if (filename.startsWith("SPRI", true, System.Globalization.CultureInfo.CurrentCulture)) {
-            colors[0] = Color.FromArgb(0, 0, 0, 0);
-            colors[13] = Color.FromArgb((int) EgaVgaPalette.EgaColors[0]);
-        }*/
+        if (filename.startsWith("SPRI")) {
+            colors[0] = new Color(0, 0, 0, 0);
+            colors[13] = new Color(EgaVgaPalette.EgaColors[0], true);
+        }
 
 
         byte[] first_frame_ega_layout = null;
