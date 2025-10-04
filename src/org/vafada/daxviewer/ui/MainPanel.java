@@ -151,7 +151,7 @@ public class MainPanel extends JPanel {
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 new JScrollPane(tree),
-                new JScrollPane(picturesContainer, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED));
+                new JScrollPane(picturesContainer));
         splitPane.setDividerLocation(200);
 
         add(splitPane, BorderLayout.CENTER);

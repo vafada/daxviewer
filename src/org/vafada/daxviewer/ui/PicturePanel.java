@@ -16,7 +16,7 @@ public class PicturePanel extends JPanel {
     private BufferedImage bitmap;
 
     public PicturePanel(BufferedImage originalBitmap) {
-        this.bitmap = Utils.scaleImage2x(originalBitmap);
+        this.bitmap = originalBitmap;
         this.setPreferredSize(new Dimension(bitmap.getWidth(), bitmap.getHeight()));
         JPanel that = this;
 
