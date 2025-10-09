@@ -4,7 +4,7 @@ public class MonoBlockSpecification implements IFileBlockSpecification {
     @Override
     public boolean isSatisfiedBy(DaxFileBlock block) {
         return (block.data().length % 8) == 0 &&
-                (block.getFilename().startsWith("8X8"));
+                (block.getFilename().toUpperCase().startsWith("8X8"));
     }
 }
 
