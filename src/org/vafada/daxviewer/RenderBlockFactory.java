@@ -8,6 +8,9 @@ public class RenderBlockFactory {
         if (new EgaBlockSpecification().isSatisfiedBy(block)) {
             return new EgaBlock(block);
         }
+        if (new MonoBlockSpecification().isSatisfiedBy(block)) {
+            return new MonoBlock(block);
+        }
 
         throw new IllegalArgumentException("Unknown block type");
     }
