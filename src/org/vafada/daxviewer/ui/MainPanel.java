@@ -3,6 +3,7 @@ package org.vafada.daxviewer.ui;
 import org.vafada.daxviewer.DaxGeoFile;
 import org.vafada.daxviewer.DaxImageFile;
 import org.vafada.daxviewer.GeoMapRecord;
+import org.vafada.daxviewer.MapsContainer;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -180,7 +181,12 @@ public class MainPanel extends JPanel {
                 if (isGEOFile(nodeFile)) {
                     DaxGeoFile daxGeoFile = new DaxGeoFile(nodeFile.getAbsolutePath());
                     List<GeoMapRecord> maps =  daxGeoFile.getMaps();
-                    System.out.println("maps = " + maps);
+                    MapsContainer mapsContainer = new MapsContainer(maps);
+
+                    rightPane.setViewportView(mapsContainer);
+                    rightPane.revalidate();
+                    rightPane.repaint();
+
                 } else {
                     DaxImageFile daxImageFile = new DaxImageFile(nodeFile.getAbsolutePath(), true);
                     PicturesContainer picturesContainer = new PicturesContainer();
