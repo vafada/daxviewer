@@ -7,3 +7,5 @@ Right-click on the image to export to PNG.
 <img src="img/cok.png">
 <p/>
 <img src="img/sprite.png">
+<p/>
+<img src="img/geomap.png">
