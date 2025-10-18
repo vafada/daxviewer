@@ -4,6 +4,7 @@ import org.vafada.daxviewer.ui.PicturePanel;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Font;
@@ -43,6 +44,9 @@ public class MapsContainer extends JPanel {
 
             g.dispose();
 
+            JLabel mapName = new JLabel(map.name());
+            mapName.setFont(new Font("Courier New", Font.BOLD, 18));
+            this.add(mapName);
             PicturePanel panel = new PicturePanel(bitmap);
             this.add(panel);
             add(Box.createVerticalStrut(20));

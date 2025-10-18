@@ -8,8 +8,28 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Utils {
+    public enum GameList {
+        PoolOfRadiance,
+        CurseOfTheAzureBonds,
+        SecretOfTheSilverBlades,
+        PoolsOfDarkness,
+        ForgottenRealmsUnlimitedAdventures,
+        GatewayToTheSavageFrontier,
+        TreasuresOfTheSavageFrontier,
+        NeverwinterNights,
+        ChampionsOfKrynn,
+        DeathKnightsOfKrynn,
+        DarkQueenOfKyrnn,
+        CountdownToDoomsday,
+        MatrixCubed,
+        Unknown,
+    }
+
     public static short readInt16LE(RandomAccessFile dis) throws IOException {
         int b1 = dis.read();
         int b2 = dis.read();
@@ -53,5 +73,61 @@ public class Utils {
         g2d.drawRenderedImage(original, at);
         g2d.dispose();
         return scaled;
+    }
+
+    public static GameList determineGameFrom(String blockFileName) {
+        // establish the directory from the file
+        Path filePath = Paths.get(blockFileName);
+
+        Path parentDirectory = filePath.getParent();
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "POOL.CFG"))) {
+            return GameList.PoolOfRadiance;
+        }
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "POOL4.CFG"))) {
+            return GameList.PoolsOfDarkness;
+        }
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "BLADES.CFG"))) {
+            return GameList.SecretOfTheSilverBlades;
+        }
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "CURSE.CFG"))) {
+            return GameList.CurseOfTheAzureBonds;
+        }
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "BUCK.CFG"))) {
+            return GameList.CountdownToDoomsday;
+        }
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "MATRIX.CFG"))) {
+            return GameList.MatrixCubed;
+        }
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "KRYNN.CFG"))) {
+            return GameList.ChampionsOfKrynn;
+        }
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "TREASURE.CFG"))) {
+            return GameList.TreasuresOfTheSavageFrontier;
+        }
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "DKK.CFG"))) {
+            return GameList.DeathKnightsOfKrynn;
+        }
+
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "GAME.CFG")) &&
+                Files.isRegularFile(Path.of(parentDirectory.toString(), "8X8D6.DAX"))) {
+            return GameList.GatewayToTheSavageFrontier;
+        }
+
+        if (Files.isRegularFile(Path.of(parentDirectory.toString(), "GAME.CFG")) &&
+                Files.isRegularFile(Path.of(parentDirectory.toString(), "CPIC.DAX"))) {
+            return GameList.NeverwinterNights;
+        }
+
+        return GameList.Unknown;
     }
 }
