@@ -1,12 +1,13 @@
 package org.vafada.daxviewer.ui;
 
+import org.vafada.daxviewer.DaxGeoFile;
 import org.vafada.daxviewer.DaxImageFile;
+import org.vafada.daxviewer.GeoMapRecord;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeWillExpandListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -18,18 +19,18 @@ import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Arrays;
-
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
+import java.util.List;
 
 public class MainPanel extends JPanel {
     private JTree tree;
-    private PicturesContainer picturesContainer = new PicturesContainer();
+    private JScrollPane rightPane = new JScrollPane();
 
     private boolean isDAXFile(File file) {
         return file.getName().toLowerCase().endsWith(".dax");
+    }
+
+    private boolean isGEOFile(File file) {
+        return file.getName().toLowerCase().startsWith("geo");
     }
 
     public MainPanel() {
@@ -105,7 +106,7 @@ public class MainPanel extends JPanel {
 
             tree = new JTree(virtualRoot);
             tree.setRootVisible(false);
-            tree.expandRow(1);
+            tree.expandRow(0);
         }
 
 
@@ -176,14 +177,27 @@ public class MainPanel extends JPanel {
             if (node == null) return;
             File nodeFile = (File) node.getUserObject();
             if (isDAXFile(nodeFile)) {
-                DaxImageFile daxImageFile = new DaxImageFile(nodeFile.getAbsolutePath(), true);
-                picturesContainer.setBitmaps(daxImageFile.getBitmaps());
+                if (isGEOFile(nodeFile)) {
+                    DaxGeoFile daxGeoFile = new DaxGeoFile(nodeFile.getAbsolutePath());
+                    List<GeoMapRecord> maps =  daxGeoFile.getMaps();
+                    System.out.println("maps = " + maps);
+                } else {
+                    DaxImageFile daxImageFile = new DaxImageFile(nodeFile.getAbsolutePath(), true);
+                    PicturesContainer picturesContainer = new PicturesContainer();
+
+                    rightPane.setViewportView(picturesContainer);
+
+                    picturesContainer.setBitmaps(daxImageFile.getBitmaps());
+
+                    rightPane.revalidate();
+                    rightPane.repaint();
+                }
             }
         });
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 new JScrollPane(tree),
-                new JScrollPane(picturesContainer));
+                rightPane);
         splitPane.setDividerLocation(200);
 
         add(splitPane, BorderLayout.CENTER);
